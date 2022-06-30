@@ -59,12 +59,16 @@ export default function App() {
 
 } else {
   return( 
-  <Login/>
+  <Login setUserLoggedIn={setUserLoggedIn}/>
   );
 }
 } 
 
 
 const styles = StyleSheet.create({
+
+  margin:{
+    marginTop:100
+  }
   
 });

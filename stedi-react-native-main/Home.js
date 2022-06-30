@@ -8,6 +8,7 @@ const Home = () => {
   return (
     <View>
       <Bar loggedInUser="Benjamin"/>
+      <Card><Text>googly.moogly@gmail.com</Text></Card>
       <Icons />
     </View>
   );
