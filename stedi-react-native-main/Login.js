@@ -10,8 +10,19 @@ async function sendText(phoneNumber){
     }
   });
 }
-
-const getToken = async ({oneTimePassword, phoneNumber, setUserLoggedIn}) => {
+const getUserName = async (token) => {
+  console.log("Let's get the username")
+  const userNameResponse = await fetch('https://dev.stedi.me/validate/'+ token,{
+    method: 'GET',
+    headers:{
+      'content-type' : 'application/json'
+    }
+  });
+  const userName = await userNameResponse.text()
+  console.log(userName)
+  return(userName)
+}
+const getToken = async ({oneTimePassword, phoneNumber, setUserLoggedIn, userName}) => {
   console.log("This should log you in")
     const tokenResponse = await fetch('https://dev.stedi.me/twofactorlogin',{
     method: 'POST',
@@ -26,15 +37,18 @@ const getToken = async ({oneTimePassword, phoneNumber, setUserLoggedIn}) => {
   if (responseCode==200)
   {
     setUserLoggedIn(true);
+
   }
   const tokenResponseText = await tokenResponse.text();
   console.log(tokenResponseText)
+  getUserName(tokenResponseText)
 }
 
 
 const Login = (props) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [oneTimePassword, setOneTimePassword] = useState(null);
+  const [userName, setUserName] = useState("")
 
 
   return (
@@ -71,8 +85,8 @@ const Login = (props) => {
       <TouchableOpacity
         style={styles.button}
         onPress={()=>{
-          // getToken({oneTimePassword,phoneNumber, setUserLoggedIn:props.setUserLoggedIn});
-          props.setUserLoggedIn(true)
+          getToken({oneTimePassword,phoneNumber, setUserLoggedIn:props.setUserLoggedIn});
+        //  props.setUserLoggedIn(true)
         }}
       >
         <Text>Login</Text>
