@@ -8,7 +8,6 @@ const Home = (props) => {
   return (
     <View>
       <Bar loggedInUser={props.loggedInUser}/>
-      <Card><Text>googly.moogly@gmail.com</Text></Card>
       <Icons />
     </View>
   );
